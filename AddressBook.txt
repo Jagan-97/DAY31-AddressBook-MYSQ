@@ -1,0 +1,201 @@
+mysql> create database AddressBook;
+Query OK, 1 row affected (0.57 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbook        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use AddressBook;
+Database changed
+mysql> create table addressbook(
+    -> FirstName varchar(32),
+    -> LastName varchar(32),
+    -> Address varchar(32),
+    -> City varchar(32),
+    -> State varchar(32),
+    -> Zip int,
+    -> PhoneNumber varchar(10),
+    -> Email varchar(32)
+    -> );
+Query OK, 0 rows affected (1.45 sec)
+
+mysql> insert into addressbook values('Jagan','Saran','3/2 Otteri','Chennai','TamilNadu','600012','9940698983','jagan.psaran38@gmail.com');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from addressbook;
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+| FirstName | LastName | Address    | City    | State     | Zip    | PhoneNumber | Email                    |
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+| Jagan     | Saran    | 3/2 Otteri | Chennai | TamilNadu | 600012 | 9940698983  | jagan.psaran38@gmail.com |
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+1 row in set (0.02 sec)
+
+mysql> insert into AddressBook values('Saravanan','Priya','10/13 AnnaNagar','Chennai','TamilNadu','600023','9566266263','Saravanan.psaravanan68@gmail.com'),('Sandip','Kumar','25-32/1 Kodambakkam','Bangalore','Karnataka','560012','9840677964','sandip@gmail.com'),('Kamal','Swetha','16-11 Mylapore','Mumbai','Maharastra','654123','9874561230','Kamal@gmail.com');
+Query OK, 3 rows affected (3.95 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+---------------------+-----------+------------+--------+-------------+----------------------------------+
+| FirstName | LastName | Address             | City      | State      | Zip    | PhoneNumber | Email                            |
++-----------+----------+---------------------+-----------+------------+--------+-------------+----------------------------------+
+| Jagan     | Saran    | 3/2 Otteri          | Chennai   | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com         |
+| Saravanan | Priya    | 10/13 AnnaNagar     | Chennai   | TamilNadu  | 600023 | 9566266263  | Saravanan.psaravanan68@gmail.com |
+| Sandip    | Kumar    | 25-32/1 Kodambakkam | Bangalore | Karnataka  | 560012 | 9840677964  | sandip@gmail.com                 |
+| Kamal     | Swetha   | 16-11 Mylapore      | Mumbai    | Maharastra | 654123 | 9874561230  | Kamal@gmail.com                  |
++-----------+----------+---------------------+-----------+------------+--------+-------------+----------------------------------+
+4 rows in set (0.17 sec)
+
+mysql> update AddressBook set city = 'Hyderabad', state = 'Andhra' where firstName = 'Saravanan';
+Query OK, 1 row affected (0.46 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+---------------------+-----------+------------+--------+-------------+----------------------------------+
+| FirstName | LastName | Address             | City      | State      | Zip    | PhoneNumber | Email                            |
++-----------+----------+---------------------+-----------+------------+--------+-------------+----------------------------------+
+| Jagan     | Saran    | 3/2 Otteri          | Chennai   | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com         |
+| Saravanan | Priya    | 10/13 AnnaNagar     | Hyderabad | Andhra     | 600023 | 9566266263  | Saravanan.psaravanan68@gmail.com |
+| Sandip    | Kumar    | 25-32/1 Kodambakkam | Bangalore | Karnataka  | 560012 | 9840677964  | sandip@gmail.com                 |
+| Kamal     | Swetha   | 16-11 Mylapore      | Mumbai    | Maharastra | 654123 | 9874561230  | Kamal@gmail.com                  |
++-----------+----------+---------------------+-----------+------------+--------+-------------+----------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from AddressBook where firstName = 'Sandip';
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+
+| FirstName | LastName | Address         | City      | State      | Zip    | PhoneNumber | Email                            |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+
+| Jagan     | Saran    | 3/2 Otteri      | Chennai   | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com         |
+| Saravanan | Priya    | 10/13 AnnaNagar | Hyderabad | Andhra     | 600023 | 9566266263  | Saravanan.psaravanan68@gmail.com |
+| Kamal     | Swetha   | 16-11 Mylapore  | Mumbai    | Maharastra | 654123 | 9874561230  | Kamal@gmail.com                  |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+
+3 rows in set (0.10 sec)
+
+mysql> select * from AddressBook where city = 'Chennai' or  state = 'Maharashtra';
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+| FirstName | LastName | Address    | City    | State     | Zip    | PhoneNumber | Email                    |
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+| Jagan     | Saran    | 3/2 Otteri | Chennai | TamilNadu | 600012 | 9940698983  | jagan.psaran38@gmail.com |
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+1 row in set (0.38 sec)
+
+mysql> select * from AddressBook where city = 'Chennai' or  state = 'Maharastra';
++-----------+----------+----------------+---------+------------+--------+-------------+--------------------------+
+| FirstName | LastName | Address        | City    | State      | Zip    | PhoneNumber | Email                    |
++-----------+----------+----------------+---------+------------+--------+-------------+--------------------------+
+| Jagan     | Saran    | 3/2 Otteri     | Chennai | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com |
+| Kamal     | Swetha   | 16-11 Mylapore | Mumbai  | Maharastra | 654123 | 9874561230  | Kamal@gmail.com          |
++-----------+----------+----------------+---------+------------+--------+-------------+--------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from AddressBook where city = 'Chennai' and state = 'TamilNadu';
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+| FirstName | LastName | Address    | City    | State     | Zip    | PhoneNumber | Email                    |
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+| Jagan     | Saran    | 3/2 Otteri | Chennai | TamilNadu | 600012 | 9940698983  | jagan.psaran38@gmail.com |
++-----------+----------+------------+---------+-----------+--------+-------------+--------------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(firstName) from AddressBook;
++------------------+
+| count(firstName) |
++------------------+
+|                3 |
++------------------+
+1 row in set (0.20 sec)
+
+mysql> select firstName,lastname from AddressBook order by city;
++-----------+----------+
+| firstName | lastname |
++-----------+----------+
+| Jagan     | Saran    |
+| Saravanan | Priya    |
+| Kamal     | Swetha   |
++-----------+----------+
+3 rows in set (0.47 sec)
+
+mysql> ALTER TABLE AddressBook ADD friends varchar(20);
+Query OK, 0 rows affected (2.62 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE AddressBook ADD family varchar(20);
+Query OK, 0 rows affected (0.42 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE AddressBook ADD profession varchar(20);
+Query OK, 0 rows affected (0.22 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+---------+--------+------------+
+| FirstName | LastName | Address         | City      | State      | Zip    | PhoneNumber | Email                            | friends | family | profession |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+---------+--------+------------+
+| Jagan     | Saran    | 3/2 Otteri      | Chennai   | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com         | NULL    | NULL   | NULL       |
+| Saravanan | Priya    | 10/13 AnnaNagar | Hyderabad | Andhra     | 600023 | 9566266263  | Saravanan.psaravanan68@gmail.com | NULL    | NULL   | NULL       |
+| Kamal     | Swetha   | 16-11 Mylapore  | Mumbai    | Maharastra | 654123 | 9874561230  | Kamal@gmail.com                  | NULL    | NULL   | NULL       |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+---------+--------+------------+
+3 rows in set (0.02 sec)
+
+mysql> UPDATE AddressBook SET family = 'srini', friends = 'Santosh', profession = 'React developer' WHERE firstName = 'Jagan';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+---------+--------+-----------------+
+| FirstName | LastName | Address         | City      | State      | Zip    | PhoneNumber | Email                            | friends | family | profession      |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+---------+--------+-----------------+
+| Jagan     | Saran    | 3/2 Otteri      | Chennai   | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com         | Santosh | srini  | React developer |
+| Saravanan | Priya    | 10/13 AnnaNagar | Hyderabad | Andhra     | 600023 | 9566266263  | Saravanan.psaravanan68@gmail.com | NULL    | NULL   | NULL            |
+| Kamal     | Swetha   | 16-11 Mylapore  | Mumbai    | Maharastra | 654123 | 9874561230  | Kamal@gmail.com                  | NULL    | NULL   | NULL            |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+---------+--------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE AddressBook SET family = 'SPP', friends = 'chiranjeevi', profession = 'Developer' WHERE firstName = 'Saravanan';
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+-------------+--------+-----------------+
+| FirstName | LastName | Address         | City      | State      | Zip    | PhoneNumber | Email                            | friends     | family | profession      |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+-------------+--------+-----------------+
+| Jagan     | Saran    | 3/2 Otteri      | Chennai   | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com         | Santosh     | srini  | React developer |
+| Saravanan | Priya    | 10/13 AnnaNagar | Hyderabad | Andhra     | 600023 | 9566266263  | Saravanan.psaravanan68@gmail.com | chiranjeevi | SPP    | Developer       |
+| Kamal     | Swetha   | 16-11 Mylapore  | Mumbai    | Maharastra | 654123 | 9874561230  | Kamal@gmail.com                  | NULL        | NULL   | NULL            |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+-------------+--------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE AddressBook SET family = 'Swetha', friends = 'Anand', profession = 'SAP Developer' WHERE firstName = 'Kamal';
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+-------------+--------+-----------------+
+| FirstName | LastName | Address         | City      | State      | Zip    | PhoneNumber | Email                            | friends     | family | profession      |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+-------------+--------+-----------------+
+| Jagan     | Saran    | 3/2 Otteri      | Chennai   | TamilNadu  | 600012 | 9940698983  | jagan.psaran38@gmail.com         | Santosh     | srini  | React developer |
+| Saravanan | Priya    | 10/13 AnnaNagar | Hyderabad | Andhra     | 600023 | 9566266263  | Saravanan.psaravanan68@gmail.com | chiranjeevi | SPP    | Developer       |
+| Kamal     | Swetha   | 16-11 Mylapore  | Mumbai    | Maharastra | 654123 | 9874561230  | Kamal@gmail.com                  | Anand       | Swetha | SAP Developer   |
++-----------+----------+-----------------+-----------+------------+--------+-------------+----------------------------------+-------------+--------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(family) from AddressBook;
++---------------+
+| count(family) |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql>

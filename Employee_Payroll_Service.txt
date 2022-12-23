@@ -1,0 +1,179 @@
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbook        |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use payroll_service;
+Database changed
+mysql> create Table employee_payroll(
+    -> EmployeeID int,
+    -> Name varchar(30),
+    -> Salary varchar(30),
+    -> StartDate varchar(30)
+    -> );
+Query OK, 0 rows affected (2.35 sec)
+
+mysql> INSERT INTO employee_payroll values('11009401','Jagan','50000','18-10-2020'),('11009402','Saravanan','60000','15-01-2021'),('11009403','Santhosh','45000','11-05-2022'),('11009404','Srinivasan','40000','14-12-2021'),('11009405','Swetha','55000','08-06-2019'),('11009406','Kamal','55000','28-09-2020');
+Query OK, 6 rows affected (0.92 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++------------+------------+--------+------------+
+| EmployeeID | Name       | Salary | StartDate  |
++------------+------------+--------+------------+
+|   11009401 | Jagan      | 50000  | 18-10-2020 |
+|   11009402 | Saravanan  | 60000  | 15-01-2021 |
+|   11009403 | Santhosh   | 45000  | 11-05-2022 |
+|   11009404 | Srinivasan | 40000  | 14-12-2021 |
+|   11009405 | Swetha     | 55000  | 08-06-2019 |
+|   11009406 | Kamal      | 55000  | 28-09-2020 |
++------------+------------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT salary FROM employee_payroll WHERE name = 'Santhosh';
++--------+
+| salary |
++--------+
+| 45000  |
++--------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE employee_payroll  ADD gender varchar(20);
+Query OK, 0 rows affected (1.54 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll
+    -> ;
++------------+------------+--------+------------+--------+
+| EmployeeID | Name       | Salary | StartDate  | gender |
++------------+------------+--------+------------+--------+
+|   11009401 | Jagan      | 50000  | 18-10-2020 | NULL   |
+|   11009402 | Saravanan  | 60000  | 15-01-2021 | NULL   |
+|   11009403 | Santhosh   | 45000  | 11-05-2022 | NULL   |
+|   11009404 | Srinivasan | 40000  | 14-12-2021 | NULL   |
+|   11009405 | Swetha     | 55000  | 08-06-2019 | NULL   |
+|   11009406 | Kamal      | 55000  | 28-09-2020 | NULL   |
++------------+------------+--------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employee_payroll set gender = 'Male' where name = 'Jagan' or name ='Saravanan' or name ='Santhosh' or name ='Srinivasan' or name ='Kamal';
+Query OK, 5 rows affected (0.08 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> UPDATE employee_payroll set gender = 'Female' where name = 'Swetha';
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee_payroll;
++------------+------------+--------+------------+--------+
+| EmployeeID | Name       | Salary | StartDate  | gender |
++------------+------------+--------+------------+--------+
+|   11009401 | Jagan      | 50000  | 18-10-2020 | Male   |
+|   11009402 | Saravanan  | 60000  | 15-01-2021 | Male   |
+|   11009403 | Santhosh   | 45000  | 11-05-2022 | Male   |
+|   11009404 | Srinivasan | 40000  | 14-12-2021 | Male   |
+|   11009405 | Swetha     | 55000  | 08-06-2019 | Female |
+|   11009406 | Kamal      | 55000  | 28-09-2020 | Male   |
++------------+------------+--------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT SUM(salary) FROM employee_payroll WHERE gender = 'Male' GROUP BY gender;
++-------------+
+| SUM(salary) |
++-------------+
+|      250000 |
++-------------+
+1 row in set (0.12 sec)
+
+mysql> SELECT SUM(salary) FROM employee_payroll WHERE gender = 'Female' GROUP BY gender;
++-------------+
+| SUM(salary) |
++-------------+
+|       55000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(salary) FROM employee_payroll WHERE gender = 'Male' GROUP BY gender;
++-------------+
+| AVG(salary) |
++-------------+
+|       50000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(salary) FROM employee_payroll WHERE gender = 'Female' GROUP BY gender;
++-------------+
+| AVG(salary) |
++-------------+
+|       55000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select COUNT(gender) from employee_payroll where gender = 'Male';
++---------------+
+| COUNT(gender) |
++---------------+
+|             5 |
++---------------+
+1 row in set (0.02 sec)
+
+mysql> select COUNT(gender) from employee_payroll where gender = 'Female';
++---------------+
+| COUNT(gender) |
++---------------+
+|             1 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(salary) FROM employee_payroll WHERE gender = 'Male' GROUP BY gender;
++-------------+
+| MIN(salary) |
++-------------+
+| 40000       |
++-------------+
+1 row in set (0.11 sec)
+
+mysql> SELECT MIN(salary) FROM employee_payroll WHERE gender = 'Female' GROUP BY gender;
++-------------+
+| MIN(salary) |
++-------------+
+| 55000       |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(salary) FROM employee_payroll WHERE gender = 'Male' GROUP BY gender;
++-------------+
+| MIN(salary) |
++-------------+
+| 40000       |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(salary) FROM employee_payroll WHERE gender = 'Male' GROUP BY gender;
++-------------+
+| MAX(salary) |
++-------------+
+| 60000       |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(salary) FROM employee_payroll WHERE gender = 'Female' GROUP BY gender;
++-------------+
+| MAX(salary) |
++-------------+
+| 55000       |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
